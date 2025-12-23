@@ -33,6 +33,15 @@ Copiez le dossier MemoryInfo dans votre dossier libraries Arduino
 
 Redémarrez l'IDE Arduino
 
+### Via PlatformIO (recommandé)
+
+Ajoutez la dépendance à votre `platformio.ini` :
+
+```ini
+lib_deps = 
+    https://github.com/Fo170/MemoryInfo.git
+```
+
 # Méthodes disponibles
 MemoryInfo.display()
 Affiche un rapport complet de l'utilisation de la mémoire dans le moniteur série.
