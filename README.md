@@ -1,6 +1,4 @@
-# MemoryInfo
-MemoryInfo pour les ESP8266, ESP32, ...
-MemoryInfo
+# MemoryInfo pour les ESP8266, ESP32, ...
 Une bibliothèque Arduino légère et efficace pour surveiller l'utilisation de la mémoire sur les microcontrôleurs ESP8266 et ESP32. Cette bibliothèque fournit des informations détaillées sur la mémoire heap, stack et PSRAM (si disponible).
 
 # Fonctionnalités
