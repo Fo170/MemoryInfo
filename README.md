@@ -37,7 +37,7 @@ Ajoutez la dépendance à votre `platformio.ini` :
 
 ```ini
 lib_deps = 
-    https://github.com/Fo170/MemoryInfo.git
+    https://github.com/Fo170/MemoryInfo.git@^1.0.0
 ```
 
 # Méthodes disponibles
