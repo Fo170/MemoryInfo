@@ -1,0 +1,45 @@
+{
+  "name": "MemoryInfo",
+  "version": "1.0.0",
+  "description": "A lightweight library to monitor memory usage on ESP8266 and ESP32 microcontrollers",
+  "keywords": ["memory", "heap", "stack", "psram", "esp8266", "esp32", "monitoring", "debug"],
+  "repository": {"type": "git","url": "https://github.com/Fo170/MemoryInfo.git"},
+  "authors": [{"name": "Fo170","email": "","url": "https://github.com/Fo170","maintainer": true }],
+  "license": "GPL-3.0",
+  "homepage": "https://github.com/Fo170/MemoryInfo",
+  "frameworks": "arduino",
+  "platforms": [ "espressif8266", "espressif32" ],
+  "headers": "MemoryInfo.h",
+  "examples": [
+  {
+      "name": "Surveillance simple",
+      "base": "examples",
+      "files": ["Exemple 1/SurveillanceSimple.ino"]
+    },
+    {
+      "name": "Surveillance périodique",
+      "base": "examples",
+      "files": ["Exemple 2/SurveillancePeriodique.ino"]
+    },
+    {
+      "name": "Récupération de valeurs individuelles",
+      "base": "examples",
+      "files": ["Exemple 3/RecupVal_indiv.ino"]
+    },
+    {
+      "name": "Gestion des fuites mémoire",
+      "base": "examples",
+      "files": ["Exemple 4/GestionFuitesMem.ino"]
+    }
+  ],
+  "export": {
+    "exclude": [
+      ".github",
+      "docs",
+      "tests",
+      "*.md",
+      "*.yml",
+      "*.txt"
+    ]
+  }
+}
