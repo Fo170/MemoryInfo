@@ -5,20 +5,20 @@ void setup() {
   Serial.begin(115200);
   
   Serial.print("Heap usage: ");
-  Serial.print(MemoryInfo.heapPercentage());
+  Serial.print(getMemoryUsagePercent());
   Serial.println("%");
   
   Serial.print("Free heap: ");
-  Serial.print(MemoryInfo.heapFree());
+  Serial.print(getFreeMemory());
   Serial.println(" bytes");
   
-  #ifdef ESP32
-  if (MemoryInfo.psramTotal() > 0) {
-    Serial.print("PSRAM free: ");
-    Serial.print(MemoryInfo.psramFree());
-    Serial.println(" bytes");
-  }
-  #endif
+  Serial.print("Total heap: ");
+  Serial.print(getTotalHeap());
+  Serial.println(" bytes");
+  
+  Serial.print("Fragmentation: ");
+  Serial.print(getHeapFragmentation());
+  Serial.println("%");
 }
 
 void loop() {}

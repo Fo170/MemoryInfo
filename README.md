@@ -1,4 +1,4 @@
-# MemoryInfo pour les ESP8266, ESP32, ...
+# MemoryInfo pour les ESP8266, ESP32, AVR, ...
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 [![Arduino](https://img.shields.io/badge/Arduino-IDE-00979C?style=flat&logo=arduino)](https://docs.arduino.cc/software/ide/)
@@ -6,22 +6,22 @@
 [![PlatformIO](https://img.shields.io/badge/PlatformIO-compatible-brightgreen.svg)](https://platformio.org/)
 [![ESP8266](https://img.shields.io/badge/ESP8266-Supported-green.svg)](https://www.espressif.com/)
 [![ESP32](https://img.shields.io/badge/ESP32-Supported-green.svg)](https://www.espressif.com/)
-[![Arduino Library Badge](https://www.ardu-badge.com/badge/PreciseTime-ESP.svg)](https://github.com/Fo170?tab=repositories)
-![GitHub release](https://img.shields.io/github/v/release/Fo170/PreciseTime-ESP)
-![GitHub last commit](https://img.shields.io/github/last-commit/Fo170/PreciseTime-ESP)
+[![Arduino Library Badge](https://www.ardu-badge.com/badge/MemoryInfo.svg)](https://github.com/Fo170/MemoryInfo)
+![GitHub release](https://img.shields.io/github/v/release/Fo170/MemoryInfo)
+![GitHub last commit](https://img.shields.io/github/last-commit/Fo170/MemoryInfo)
 
-Une bibliothèque Arduino légère et efficace pour surveiller l'utilisation de la mémoire sur les microcontrôleurs ESP8266 et ESP32. Cette bibliothèque fournit des informations détaillées sur la mémoire heap, stack et PSRAM (si disponible).
+Une bibliothèque Arduino légère et efficace pour surveiller l'utilisation de la mémoire (heap) sur les microcontrôleurs ESP8266, ESP32 et AVR.
 
 # Fonctionnalités
-📊 Surveillance complète de la mémoire : Heap, stack et PSRAM
+📊 Surveillance de la mémoire heap : libre, utilisée, fragmentation
 
-🏗️ Support multi-architecture : ESP8266 et ESP32
+🏗️ Support multi-architecture : ESP8266, ESP32 et AVR
 
 📝 Sortie formatée : Affichage clair via Serial
 
-🔧 Interface simple : Méthodes faciles à utiliser
+🔧 Interface simple : Fonctions faciles à utiliser
 
-🚀 Léger : Pas de surcharge significative
+🚀 Léger : Header-only, pas de surcharge significative
 
 # Installation
 Méthode 1 : Gestionnaire de bibliothèques Arduino
@@ -48,53 +48,52 @@ Ajoutez la dépendance à votre `platformio.ini` :
 
 ```ini
 lib_deps = 
-    https://github.com/Fo170/MemoryInfo.git@^1.0.0
+    https://github.com/Fo170/MemoryInfo.git@^1.1.0
 ```
 
-# Méthodes disponibles
-MemoryInfo.display()
-Affiche un rapport complet de l'utilisation de la mémoire dans le moniteur série.
+# Fonctions disponibles
+`getFreeMemory()`
+Retourne la quantité de heap libre en octets (-1 si non supporté).
 
-MemoryInfo.heapPercentage()
-Retourne le pourcentage d'utilisation du heap.
+`getTotalHeap()`
+Retourne la taille totale du heap en octets (référence mesurée au premier appel sur ESP8266, RAM totale sur AVR).
 
-MemoryInfo.heapTotal()
-Retourne la taille totale du heap en octets.
+`getHeapFragmentation()`
+Retourne le pourcentage de fragmentation du heap (0 sur AVR, -1 si non supporté).
 
-MemoryInfo.heapUsed()
+`getUsedMemory()`
 Retourne la quantité de heap utilisée en octets.
 
-MemoryInfo.heapFree()
-Retourne la quantité de heap libre en octets.
+`getMemoryUsagePercent()`
+Retourne le pourcentage d'utilisation du heap (-1.0 si non supporté).
 
-MemoryInfo.maxBlock()
-Retourne la taille du plus grand bloc mémoire disponible.
+`getMemoryInfo()`
+Retourne une structure `MemoryInfo` avec `freeMemory`, `totalMemory`, `fragmentation` et `isAvailable`.
 
-MemoryInfo.stackUsed()
-Retourne la quantité de stack utilisée en octets.
+`getMemoryStats()`
+Retourne une structure `MemoryStats` avec `usedMemory`, `freeMemory`, `heapSize` et `fragmentation`.
 
-MemoryInfo.psramTotal() (ESP32 seulement)
-Retourne la taille totale de la PSRAM en octets.
+`printMemoryInfo()`
+Affiche un rapport complet de l'utilisation de la mémoire dans le moniteur série.
 
-MemoryInfo.psramUsed() (ESP32 seulement)
-Retourne la quantité de PSRAM utilisée en octets.
-
-MemoryInfo.psramFree() (ESP32 seulement)
-Retourne la quantité de PSRAM libre en octets.
+`printMemoryStats()`
+Affiche un rapport détaillé (statistiques) dans le moniteur série.
 
 # Support des plates-formes
-ESP8266 : Support complet du heap et stack
+ESP8266 : Support du heap via ESP.getFreeHeap()
 
-ESP32 : Support complet du heap, stack et PSRAM
+ESP32 : Support du heap via esp_heap_caps
 
-Autres plates-formes : Non supportées actuellement
+AVR : Support du heap (fragmentation non mesurée)
+
+Autres plates-formes : Retournent -1
 
 # Limitations
-Les mesures de stack sont des estimations
+Sur ESP8266, le total du heap est la référence mesurée au premier appel
 
 La précision peut varier selon le modèle d'ESP
 
-L'utilisation de la PSRAM n'est disponible que sur les ESP32 avec PSRAM
+La fragmentation n'est pas mesurée sur AVR
 
 # Dépannage
 Problème : "MemoryInfo.h: No such file or directory"
@@ -107,25 +106,17 @@ Attendez que le système soit stable avant de mesurer
 
 Évitez de mesurer pendant les interruptions
 
-Problème : PSRAM non détectée
-Vérifiez que votre ESP32 a de la PSRAM
-
-Activez la PSRAM dans les options de compilation
-
 # Contribution
 Les contributions sont les bienvenues ! N'hésitez pas à :
-
-# Signaler des bugs
-
-Proposer des nouvelles fonctionnalités
-
-Soumettre des pull requests
+- Signaler des bugs
+- Proposer des nouvelles fonctionnalités
+- Soumettre des pull requests
 
 # Licence
-Cette bibliothèque est distribuée sous GPL-3.0 license. Voir le fichier LICENSE pour plus de détails.
+Cette bibliothèque est distribuée sous GPL-3.0-only. Voir le fichier LICENSE pour plus de détails.
 
 # Auteur
-Développé par Fo170. Retrouvez le projet sur GitHub.
+Développé par FOURNET Olivier. Retrouvez le projet sur GitHub.
 
 # Support
 Pour toute question ou problème :

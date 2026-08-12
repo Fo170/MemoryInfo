@@ -2,7 +2,7 @@
 #define MEMORY_INFO_H
 
 #include <Arduino.h>
-// MemoryInfo v1.0.0
+// MemoryInfo v1.1.0
 
 // Structures de données
 struct MemoryInfo {
@@ -24,9 +24,15 @@ struct MemoryStats {
 #include <Esp.h>
 
 inline int getFreeMemory() { return ESP.getFreeHeap(); }
-inline int getTotalHeap() { return 81920; } // 80KB pour ESP8266
+inline int getTotalHeap() {
+    static int total = ESP.getFreeHeap(); // référence mesurée au 1er appel
+    return total;
+}
 inline int getHeapFragmentation() { return ESP.getHeapFragmentation(); }
-inline int getUsedMemory() { return getTotalHeap() - getFreeMemory(); }
+inline int getUsedMemory() {
+    int used = getTotalHeap() - getFreeMemory();
+    return used < 0 ? 0 : used; // évite un négatif si heap libre > référence
+}
 
 // Pour ESP32
 #elif defined(ESP32)
@@ -60,12 +66,13 @@ inline int getFreeMemory() {
 }
 
 inline int getTotalHeap() {
-    #if defined(RAMEND) && defined(RAMSTART)
-        return RAMEND - RAMSTART;
+    #if defined(RAMEND)
+        #ifndef RAMSTART
+        #define RAMSTART 0x100 // la SRAM AVR commence toujours à 0x100
+        #endif
+        return RAMEND - RAMSTART + 1;
     #elif defined(__AVR_ATmega328P__)
         return 2048;
-    #elif defined(__AVR_ATmega2560__)
-        return 8192;
     #else
         return 2048;
     #endif
@@ -123,9 +130,9 @@ inline void printMemoryInfo() {
     Serial.print(info.totalMemory);
     Serial.println(F(" bytes"));
 
-    Serial.print(F("  RAM utilisée: "));
-    Serial.print(info.totalMemory - info.freeMemory);
-    Serial.print(F(" bytes / "));
+    Serial.print(F("RAM utilisée: "));
+    Serial.print(getUsedMemory());
+    Serial.println(F(" bytes"));
 
     Serial.print(F("RAM libre: "));
     Serial.print(info.freeMemory);

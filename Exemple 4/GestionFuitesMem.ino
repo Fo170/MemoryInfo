@@ -4,7 +4,7 @@
 unsigned long lastHeap = 0;
 
 void checkMemoryLeak() {
-  unsigned long currentHeap = MemoryInfo.heapUsed();
+  unsigned long currentHeap = getUsedMemory();
   
   if (lastHeap > 0 && currentHeap > lastHeap) {
     Serial.print("Possible memory leak detected! Increase: ");
@@ -16,8 +16,8 @@ void checkMemoryLeak() {
 
 void setup() {
   Serial.begin(115200);
-  MemoryInfo.display();
-  lastHeap = MemoryInfo.heapUsed();
+  printMemoryInfo();
+  lastHeap = getUsedMemory();
 }
 
 void loop() {

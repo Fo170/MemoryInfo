@@ -9,7 +9,7 @@ void loop() {
   // Affiche les informations toutes les 10 secondes
   static unsigned long lastDisplay = 0;
   if (millis() - lastDisplay > 10000) {
-    MemoryInfo.display();
+    printMemoryInfo();
     lastDisplay = millis();
   }
   

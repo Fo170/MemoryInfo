@@ -8,7 +8,7 @@ void setup() {
   char* buffer = (char*)malloc(1024);
   
   // Affiche les informations
-  MemoryInfo.display();
+  printMemoryInfo();
   
   free(buffer);
 }

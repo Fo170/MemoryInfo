@@ -1,14 +1,14 @@
 {
   "name": "MemoryInfo",
-  "version": "1.0.0",
-  "description": "A lightweight library to monitor memory usage on ESP8266 and ESP32 microcontrollers",
-  "keywords": ["memory", "heap", "stack", "psram", "esp8266", "esp32", "monitoring", "debug"],
+  "version": "1.1.0",
+  "description": "A lightweight library to monitor memory usage on ESP8266, ESP32 and AVR microcontrollers",
+  "keywords": ["memory", "heap", "fragmentation", "esp8266", "esp32", "avr", "monitoring", "debug"],
   "repository": {"type": "git","url": "https://github.com/Fo170/MemoryInfo.git"},
-  "authors": [{"name": "Fo170","email": "","url": "https://github.com/Fo170","maintainer": true }],
-  "license": "GPL-3.0",
+  "authors": [{"name": "Olivier FOURNET","email": "olivier.fournet@free.fr","url": "https://github.com/Fo170","maintainer": true }],
+  "license": "GPL-3.0-only",
   "homepage": "https://github.com/Fo170/MemoryInfo",
   "frameworks": "arduino",
-  "platforms": [ "espressif8266", "espressif32" ],
+  "platforms": [ "espressif8266", "espressif32", "atmelavr" ],
   "headers": "MemoryInfo.h",
   "examples": [
   {
