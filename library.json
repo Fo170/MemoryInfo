@@ -1,6 +1,6 @@
 {
   "name": "MemoryInfo",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "A lightweight library to monitor memory usage on ESP8266, ESP32 and AVR microcontrollers",
   "keywords": ["memory", "heap", "fragmentation", "esp8266", "esp32", "avr", "monitoring", "debug"],
   "repository": {"type": "git","url": "https://github.com/Fo170/MemoryInfo.git"},

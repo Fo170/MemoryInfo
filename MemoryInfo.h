@@ -3,7 +3,7 @@
 
 
 // Version de la librairie (source UNIQUE — agrégée par liste_lib.h)
-#define __MEMORYINFO_H_VERSION__ "1.1.0"
+#define __MEMORYINFO_H_VERSION__ "1.1.1"
 #include <Arduino.h>
 // MemoryInfo v1.1.0
 
